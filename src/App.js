@@ -1,10 +1,14 @@
 import './App.css';
+import GlobalStyle from "./style/global";
+import RoutesApp from "./routes/routes";
+import {AuthProvider} from "./context/auth";
 
 function App() {
   return (
-      <div>
-
-      </div>
+      <AuthProvider>
+          <RoutesApp/>
+          <GlobalStyle/>
+      </AuthProvider>
   );
 }
 
