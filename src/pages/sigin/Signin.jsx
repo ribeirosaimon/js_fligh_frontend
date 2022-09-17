@@ -15,16 +15,20 @@ const Signin = () => {
     const [error, setError] = useState("")
 
     const handleLogin = () => {
-        if (!email | !password){
-            setError("Preencha todos os campso")
+
+        if (!email | !password) {
+            setError("You must insert all fields")
             return
         }
+
         const res = signin(email, password)
 
-        if (res){
+        if (res !== "") {
             setError(res)
-            return;
+
         }
+
+        console.log(res)
     }
     return (
         <C.Container>
@@ -39,7 +43,7 @@ const Signin = () => {
                 <Input
                     type={"password"}
                     placeholder={"password"}
-                    value={email}
+                    value={password}
                     onChange={(e) => [setPassword(e.target.value), setError("")]}>
                 </Input>
                 <C.LabelError>{error}</C.LabelError>
@@ -51,7 +55,6 @@ const Signin = () => {
                     </C.Strong>
                 </C.LabelSignup>
             </C.Content>
-
         </C.Container>
     )
 }
