@@ -15,21 +15,13 @@ const Signin = () => {
     const [error, setError] = useState("")
 
     const handleLogin = () => {
-
         if (!email | !password) {
             setError("You must insert all fields")
             return
         }
-
-        const res = signin(email, password)
-
-        if (res !== "") {
-            setError(res)
-
-        }
-
-        console.log(res)
+        signin(email, password)
     }
+
     return (
         <C.Container>
             <C.Label>Login Flight Cheap</C.Label>

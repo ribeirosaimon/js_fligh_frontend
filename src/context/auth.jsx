@@ -18,43 +18,28 @@ export const AuthProvider = ({children}) => {
             setIsAuthenticated(true);
             setToken(sessionToken);
         }
+        console.log(isAuthenticated)
     }, [isAuthenticated]);
 
     const signin = async (email, password) => {
-        setLoading(true)
         const body = JSON.stringify({"username": email, "password": password})
+        console.log(body)
 
-        await HttpLoginAxios(body).then(resp => {
-            localStorage.setItem("token", resp.data.access_token);
-            setIsAuthenticated(true);
-            setToken(resp.data.token);
-            setError("")
-        })
-            .catch(() => setError("login or password incorrect"))
-        console.log(error)
+        await HttpLoginAxios(body)
+            .then(resp => {
+                console.log("Fez o post com sucesso")
+                localStorage.setItem("token", resp.data.access_token);
+                setIsAuthenticated(true);
+                setToken(resp.data.token)
+            })
+            .catch(() => {
+                console.log("Fez o post com erro")
+                setError("login or password incorrect")
+            })
 
+        return ""
     }
 
-
-    const signup = (email, password) => {
-        const userStorage = JSON.parse(localStorage.getItem("user_db"))
-
-        const hasUser = userStorage?.filter((user) => user.email === email)
-
-        if (hasUser?.length) {
-            return "Ja tem user"
-        }
-
-        let newUser
-
-        if (userStorage) {
-            newUser = [...userStorage, {email, password}]
-        } else {
-            newUser = [{email, password}]
-        }
-
-        localStorage.setItem("user_db", JSON.stringify(newUser))
-    }
 
     const signout = () => {
         setUser(null)
@@ -62,8 +47,8 @@ export const AuthProvider = ({children}) => {
     }
     return (
         <AuthContext.Provider
-            value={{user, siged: !!user, signin, signup, signout}}
+            value={{user, siged: !!user, signin, signout}}
         >
-            {!loading ? children : ""}
+            {children}
         </AuthContext.Provider>)
 }
