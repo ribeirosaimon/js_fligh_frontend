@@ -3,22 +3,31 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Signin from "../pages/sigin/Signin";
 import Home from "../pages/home/home";
 import useAuth from "../hooks/useAuth";
+import CheapFlight from "../pages/CheapFlight/CheapFlight";
+import AllFlights from "../pages/allFlights/AllFlights";
 
 const Private = ({Item}) => {
-    const {signed} = useAuth()
+    const {isAuthenticated} = useAuth()
 
-    return signed > 0 ? <Item/> : <Signin/>
+    return isAuthenticated ? <Item/> : <Signin/>
+}
+
+const LoginPrivateRoute = ({Login}) => {
+    const {isAuthenticated} = useAuth()
+
+    return !isAuthenticated ? <Login/> : <Home/>
 }
 
 const RoutesApp = () => {
     return (
         <BrowserRouter>
             <Fragment>
+
                 <Routes>
                     <Route exact path="/home" element={<Private Item={Home}/>}/>
-
-                    <Route path={"/"} element={<Signin/>}/>
-                    <Route path={"/*"} element={<Signin/>}/>
+                    <Route exact path="/cheap-flight" element={<Private Item={CheapFlight}/>}/>
+                    <Route exact path="/all-flight" element={<Private Item={AllFlights}/>}/>
+                    <Route path={"/"} element={<Private Item={LoginPrivateRoute}/>}/>
                 </Routes>
             </Fragment>
         </BrowserRouter>

@@ -22,22 +22,22 @@ export const AuthProvider = ({children}) => {
     }, [isAuthenticated]);
 
     const signin = async (email, password) => {
+        setLoading(true)
         const body = JSON.stringify({"username": email, "password": password})
         console.log(body)
 
         await HttpLoginAxios(body)
             .then(resp => {
-                console.log("Fez o post com sucesso")
                 localStorage.setItem("token", resp.data.access_token);
                 setIsAuthenticated(true);
                 setToken(resp.data.token)
+                setError("")
+                setLoading(false)
             })
             .catch(() => {
-                console.log("Fez o post com erro")
                 setError("login or password incorrect")
+                setLoading(false)
             })
-
-        return ""
     }
 
 
@@ -46,9 +46,12 @@ export const AuthProvider = ({children}) => {
         localStorage.removeItem("user_token")
     }
     return (
-        <AuthContext.Provider
-            value={{user, siged: !!user, signin, signout}}
-        >
-            {children}
-        </AuthContext.Provider>)
+        !loading ?
+            <AuthContext.Provider
+                value={{user, siged: !!user, signin, signout, isAuthenticated, token}}
+            >
+                {children}
+            </AuthContext.Provider>
+            :
+            <div>ESPERA</div>)
 }

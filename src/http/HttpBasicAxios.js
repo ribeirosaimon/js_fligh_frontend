@@ -1,35 +1,35 @@
 import myAxios from "./axios";
 
-const headers = (token) => {
+const headers = () => {
 
     return (
         {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: token
+                Authorization: localStorage.getItem("token")
             }
         }
     );
 };
 
-const HttpGetAxios = async (url, token) => {
+const HttpGetAxios = async (url) => {
     console.log("GET Axios")
-    const config = headers(token);
+    const config = headers();
     return (myAxios.get(url, config));
 };
 
-const HttpPostAxios = async (url, body, token) => {
-    const config = headers(token);
+const HttpPostAxios = async (url, body) => {
+    const config = headers();
     return (myAxios.post(url, body, config));
 };
 
-const HttpPutAxios = async (url, body, token) => {
-    const config = headers(token);
+const HttpPutAxios = async (url, body) => {
+    const config = headers();
     return (myAxios.put(url, body, config));
 };
 
-const HttpDeleteAxios = async (url, token) => {
-    const config = headers(token);
+const HttpDeleteAxios = async (url) => {
+    const config = headers();
     return (myAxios.delete(url, config));
 };
 
@@ -43,5 +43,4 @@ const HttpLoginAxios = async (params) => {
 };
 
 
-
-export { HttpGetAxios, HttpPostAxios, HttpPutAxios, HttpDeleteAxios, HttpLoginAxios };
+export {HttpGetAxios, HttpPostAxios, HttpPutAxios, HttpDeleteAxios, HttpLoginAxios};

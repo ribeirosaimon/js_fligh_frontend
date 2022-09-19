@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as C from "./styles"
 import Input from "../../components/input/styles";
 import Button from "../../components/Button/Button";
@@ -19,7 +19,11 @@ const Signin = () => {
             setError("You must insert all fields")
             return
         }
-        signin(email, password)
+        const signinError = signin(email, password)
+        if (signinError !== ""){
+            setError(signinError)
+        }
+        navigate("/home")
     }
 
     return (
