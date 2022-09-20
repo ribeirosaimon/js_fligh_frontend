@@ -24,7 +24,6 @@ export const AuthProvider = ({children}) => {
     const signin = async (email, password) => {
         setLoading(true)
         const body = JSON.stringify({"username": email, "password": password})
-        console.log(body)
 
         await HttpLoginAxios(body)
             .then(resp => {
@@ -43,8 +42,10 @@ export const AuthProvider = ({children}) => {
 
     const signout = () => {
         setUser(null)
-        localStorage.removeItem("user_token")
+        localStorage.removeItem("token")
+        setIsAuthenticated(false)
     }
+
     return (
         !loading ?
             <AuthContext.Provider

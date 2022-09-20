@@ -2,16 +2,15 @@ import './App.css';
 import GlobalStyle from "./style/global";
 import RoutesApp from "./routes/routes";
 import {AuthProvider} from "./context/auth";
-import NavBar from "./navBar/NavBar";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  return (
-      <AuthProvider>
-          <NavBar/>
-          <RoutesApp/>
-          <GlobalStyle/>
-      </AuthProvider>
-  );
+    return (
+        <AuthProvider>
+            <RoutesApp/>
+            <GlobalStyle/>
+        </AuthProvider>
+    );
 }
 
 export default App;

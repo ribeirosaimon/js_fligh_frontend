@@ -6,16 +6,14 @@ const headers = () => {
         {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: localStorage.getItem("token")
+                Authorization: "Bearer " + localStorage.getItem("token")
             }
         }
     );
 };
 
 const HttpGetAxios = async (url) => {
-    console.log("GET Axios")
-    const config = headers();
-    return (myAxios.get(url, config));
+    return myAxios.get(url, headers());
 };
 
 const HttpPostAxios = async (url, body) => {

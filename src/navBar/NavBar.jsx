@@ -1,5 +1,8 @@
+import useAuth from "../hooks/useAuth";
 
 const NavBar = () => {
+    const {signout} = useAuth()
+
     return(
         <div>
             <ul>
@@ -16,6 +19,11 @@ const NavBar = () => {
                 <li>
                     <a href={"/all-flight"}>
                         Todas Passagens
+                    </a>
+                </li>
+                <li>
+                    <a href={"/"} onClick={() => signout()}>
+                        Logout
                     </a>
                 </li>
             </ul>

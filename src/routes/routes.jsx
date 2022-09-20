@@ -5,24 +5,35 @@ import Home from "../pages/home/home";
 import useAuth from "../hooks/useAuth";
 import CheapFlight from "../pages/CheapFlight/CheapFlight";
 import AllFlights from "../pages/allFlights/AllFlights";
+import NavBar from "../navBar/NavBar";
 
 const Private = ({Item}) => {
     const {isAuthenticated} = useAuth()
 
-    return isAuthenticated ? <Item/> : <Signin/>
+    return isAuthenticated ?
+        <>
+            <NavBar/>
+            <Item/>
+        </>
+        :
+        <Signin/>
 }
 
 const LoginPrivateRoute = ({Login}) => {
     const {isAuthenticated} = useAuth()
 
-    return !isAuthenticated ? <Login/> : <Home/>
+    return (
+        !isAuthenticated ?
+            <Login/>
+            :
+            <Home/>
+    )
 }
 
 const RoutesApp = () => {
     return (
         <BrowserRouter>
             <Fragment>
-
                 <Routes>
                     <Route exact path="/home" element={<Private Item={Home}/>}/>
                     <Route exact path="/cheap-flight" element={<Private Item={CheapFlight}/>}/>

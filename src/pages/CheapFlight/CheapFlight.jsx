@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {HttpGetAxios, HttpPostAxios} from "../../http/HttpBasicAxios";
+import {HttpGetAxios} from "../../http/HttpBasicAxios";
 
 
 const CheapFlight = () => {
@@ -8,9 +8,12 @@ const CheapFlight = () => {
         HttpGetAxios("/flight/cheap")
             .then((resp) => {
                 console.log(resp.data)
-            })
+            }).catch((err) => {
+            console.log(err)
+        })
     })
-    return(
+
+    return (
         <div>Voce veio pra CheapFlight </div>
     )
 }
