@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import CheapFlight from "../pages/CheapFlight/CheapFlight";
 import AllFlights from "../pages/allFlights/AllFlights";
 import NavBar from "../navBar/NavBar";
+import WhoIsMe from "../pages/whoIsMe/WhoIsMe";
 
 const Private = ({Item}) => {
     const {isAuthenticated} = useAuth()
@@ -38,6 +39,7 @@ const RoutesApp = () => {
                     <Route exact path="/home" element={<Private Item={Home}/>}/>
                     <Route exact path="/cheap-flight" element={<Private Item={CheapFlight}/>}/>
                     <Route exact path="/all-flight" element={<Private Item={AllFlights}/>}/>
+                    <Route exact path="/whoisme" element={<Private Item={WhoIsMe}/>}/>
                     <Route path={"/"} element={<Private Item={LoginPrivateRoute}/>}/>
                 </Routes>
             </Fragment>
