@@ -2,6 +2,8 @@ import useAuth from "../hooks/useAuth";
 
 const NavBar = () => {
     const {signout} = useAuth()
+    const userRole = localStorage.getItem("userRole");
+    console.log(userRole)
 
     function handleNavBar() {
         return (
@@ -19,15 +21,20 @@ const NavBar = () => {
                         <li className="nav-item">
                             <a className="nav-link" href="/all-flight">All Ticket</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Configuration</a>
-                        </li>
+                        {userRole === "ADMIN" ?
+                            <li className="nav-item">
+                                <a className="nav-link" href="/configuration">Configuration</a>
+                            </li>
+                            :
+                            <>
+                            </>
+                        }
                     </ul>
                 </div>
-                <button className="btn btn-outline-success mx-2" type="submit" >
-                        <a className="nav-link" href="/whoisme">Who is Me</a>
+                <button className="btn btn-outline-success mx-2" type="submit">
+                    <a className="nav-link" href="/whoisme">Who is Me</a>
                 </button>
-                <button className="btn btn-outline-danger mx-2"  type="submit" href={"/"}
+                <button className="btn btn-outline-danger mx-5" type="submit" href={"/"}
                         onClick={() => signout()}>Logout
                 </button>
             </nav>

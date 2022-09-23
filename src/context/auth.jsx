@@ -1,5 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import {HttpGetAxios, HttpLoginAxios} from "../http/HttpBasicAxios";
+import Loading from "../components/Loading/Loading";
+import {useNavigate} from "react-router-dom";
 
 export const AuthContext = createContext({})
 
@@ -27,40 +29,37 @@ export const AuthProvider = ({children}) => {
     }, [isAuthenticated]);
 
     const signin = async (email, password) => {
-        setLoading(true)
         const body = JSON.stringify({"username": email, "password": password})
 
         await HttpLoginAxios(body)
             .then(resp => {
+                setLoading(true)
                 localStorage.setItem("token", resp.data.access_token);
                 setToken(resp.data.token)
-                setError("")
 
+                HttpGetAxios("user/who-is-me")
+                    .then((resp) => {
+                        let userRole
+                        if (resp.data.roles.includes("USER")) {
+                            userRole = "USER"
+                        }
+                        if (resp.data.roles.includes("ADMIN")) {
+                            userRole = "ADMIN"
+                        }
+
+                        localStorage.setItem("userRole", userRole);
+                        localStorage.setItem("userId", resp.data.userId);
+
+                        setLoading(false)
+                        setIsAuthenticated(true);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             })
             .catch(() => {
                 setError("login or password incorrect")
                 setLoading(false)
-            })
-
-        await HttpGetAxios("user/who-is-me")
-            .then((resp) => {
-                let userRole
-                console.log(resp.data.roles)
-                if (resp.data.roles.includes("USER")) {
-                    userRole = "USER"
-                }
-                if (resp.data.roles.includes("ADMIN")) {
-                    userRole = "ADMIN"
-                }
-
-                localStorage.setItem("userRole", userRole);
-                localStorage.setItem("userId", resp.data.userId);
-
-                setLoading(false)
-                setIsAuthenticated(true);
-            })
-            .catch(err => {
-                console.log(err)
             })
     }
 
@@ -73,10 +72,11 @@ export const AuthProvider = ({children}) => {
     return (
         !loading ?
             <AuthContext.Provider
-                value={{signin, signout, isAuthenticated, token, loggedUser}}
+                value={{signin, signout, isAuthenticated, token, loggedUser, setLoading, loading}}
             >
                 {children}
             </AuthContext.Provider>
             :
-            <div>ESPERA</div>)
+            <Loading/>
+    )
 }

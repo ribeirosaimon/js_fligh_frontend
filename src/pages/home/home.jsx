@@ -1,16 +1,14 @@
-import {useEffect} from "react";
-import {HttpGetAxios} from "../../http/HttpBasicAxios";
-
+import React from "react";
+import * as C from "./styles"
 
 const Home = () => {
-    useEffect(() => {
-        HttpGetAxios("/config")
-            .then((resp) => {
-                console.log(resp.data)
-            })
-    })
-    return(
-        <div>Voce veio pra home </div>
+
+    return (
+        <C.Container>
+            <C.Content>
+                Welcome to Cheap flight project
+            </C.Content>
+        </C.Container>
     )
 }
 
