@@ -1,4 +1,5 @@
 import myAxios from "./axios";
+import axios from "axios";
 
 const headers = () => {
 
@@ -10,6 +11,10 @@ const headers = () => {
             }
         }
     );
+};
+
+const HttpPythonApiGet = async () => {
+    return axios.get("http://localhost:5000/")
 };
 
 const HttpGetAxios = async (url) => {
@@ -41,4 +46,4 @@ const HttpLoginAxios = async (params) => {
 };
 
 
-export {HttpGetAxios, HttpPostAxios, HttpPutAxios, HttpDeleteAxios, HttpLoginAxios};
+export {HttpGetAxios, HttpPostAxios, HttpPutAxios, HttpDeleteAxios, HttpLoginAxios, HttpPythonApiGet};

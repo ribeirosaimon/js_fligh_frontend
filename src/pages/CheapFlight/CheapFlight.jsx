@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {HttpGetAxios} from "../../http/HttpBasicAxios";
+import Loading from "../../components/Loading/Loading";
+import FindNewFlight from "./FindNewFlight";
 
 
 const CheapFlight = () => {
@@ -45,8 +47,11 @@ const CheapFlight = () => {
                     </tbody>
                 </table>
             :
-            <div>ESPERA</div>}
-
+            <Loading/>
+            }
+            <div>
+                <FindNewFlight/>
+            </div>
         </>
     )
 }
