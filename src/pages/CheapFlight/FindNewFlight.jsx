@@ -1,22 +1,32 @@
 import * as C from "./styles"
 import {useEffect, useState} from "react";
 import {HttpGetAxios, HttpPythonApiGet} from "../../http/HttpBasicAxios";
+import {ErrorToast} from "../../components/Toasty/Toasty";
 
 const FindNewFlight = () => {
     const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
-        HttpGetAxios("/config")
-            .then(resp => {
-                setIsLoading(resp.data.isLoading)
-                console.log("finalizou")
-            })
-        console.log("Teste")
-    }, [isLoading])
+        if (isLoading){
+            HttpGetAxios("/config")
+                .then(resp => {
+                    setIsLoading(resp.data.isLoading)
+                })
+                .catch(() => {
+                    ErrorToast("Api Error")
+                })
+        }
+    },[])
 
     function getNewFlight() {
+        setIsLoading(true)
         HttpPythonApiGet()
             .then(resp => {
                 console.log(resp.data)
+                setIsLoading(false)
+            })
+            .catch(() => {
+                ErrorToast("Python Api error")
             })
     }
 
