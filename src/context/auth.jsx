@@ -53,9 +53,6 @@ export const AuthProvider = ({children}) => {
                         setLoading(false)
                         setIsAuthenticated(true);
                     })
-                    .catch(err => {
-                        console.log(err)
-                    })
             })
             .catch(() => {
                 setError("login or password incorrect")

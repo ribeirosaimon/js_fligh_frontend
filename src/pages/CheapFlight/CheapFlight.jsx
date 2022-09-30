@@ -14,9 +14,7 @@ const CheapFlight = () => {
             .then((resp) => {
                 setCheapFlight(resp.data)
                 setLoading(false)
-            }).catch((err) => {
-            console.log(err)
-        })
+            })
     }, [])
 
     return (

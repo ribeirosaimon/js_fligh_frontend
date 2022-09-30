@@ -23,6 +23,19 @@ export const Content = styled.div`
   border-radius: 5px;
 `
 
+export const ContentResp = styled.div`
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0 1px 2px #0003;
+  background-color: white;
+  max-width: 90%;
+  padding: 20px;
+  border-radius: 5px;
+`
 export const Label = styled.label`
   font-size: 18px;
   font-weight: 500;

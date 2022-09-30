@@ -13,7 +13,6 @@ const Configuration = () => {
     function getAllUsers(){
         HttpGetAxios("/user")
             .then(resp => {
-                console.log("req")
                 setAllUsers(resp.data)
             })
     }
@@ -27,7 +26,6 @@ const Configuration = () => {
             .catch(() => {
                 ErrorToast("Have a problem with API")
             })
-        console.log(allUsers)
     }
 
     return (

@@ -8,7 +8,7 @@ import {ErrorToast} from "../../components/Toasty/Toasty";
 
 
 const Signin = () => {
-    const {signin, isAuthenticated} = useAuth()
+    const {signin, isAuthenticated, loading} = useAuth()
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
@@ -23,7 +23,7 @@ const Signin = () => {
 
         signin(email, password)
 
-        if (!isAuthenticated) {
+        if (!isAuthenticated && loading) {
             ErrorToast("incorrect password")
         } else {
             navigate("/home")
