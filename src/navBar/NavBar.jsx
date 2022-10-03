@@ -21,6 +21,9 @@ const NavBar = () => {
                         <li className="nav-item">
                             <a className="nav-link" href="/all-flight">All Ticket</a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/find-flight">Find Ticket</a>
+                        </li>
                         {userRole === "ADMIN" ?
                             <li className="nav-item">
                                 <a className="nav-link" href="/configuration">Configuration</a>

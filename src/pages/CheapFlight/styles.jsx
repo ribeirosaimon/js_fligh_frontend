@@ -36,6 +36,7 @@ export const ContentResp = styled.div`
   padding: 20px;
   border-radius: 5px;
 `
+
 export const Label = styled.label`
   font-size: 18px;
   font-weight: 500;

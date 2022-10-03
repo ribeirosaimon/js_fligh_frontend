@@ -8,6 +8,7 @@ import AllFlights from "../pages/allFlights/AllFlights";
 import NavBar from "../navBar/NavBar";
 import WhoIsMe from "../pages/whoIsMe/WhoIsMe";
 import Configuration from "../pages/Configuration/Configuration";
+import FindFlignts from "../pages/FindFlights/FindFlignts";
 
 const Private = ({Item}) => {
     const {isAuthenticated} = useAuth()
@@ -41,6 +42,7 @@ const RoutesApp = () => {
                     <Route exact path="/cheap-flight" element={<Private Item={CheapFlight}/>}/>
                     <Route exact path="/all-flight" element={<Private Item={AllFlights}/>}/>
                     <Route exact path="/whoisme" element={<Private Item={WhoIsMe}/>}/>
+                    <Route exact path="/find-flight" element={<Private Item={FindFlignts}/>}/>
                     <Route exact path="/configuration" element={<Private Item={Configuration}/>}/>
                     <Route path={"/"} element={<Private Item={LoginPrivateRoute}/>}/>
                 </Routes>

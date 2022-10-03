@@ -17,66 +17,74 @@ const FindNewFlight = () => {
             .catch(() => {
                 ErrorToast("Api Error")
             })
+        getLastFlight()
+    }, [])
 
+    useEffect(() => {
+        getLastFlight()
+    }, [isLoading])
+
+    function getLastFlight() {
         HttpGetAxios("flight/last-flight")
             .then(resp => {
                 setLastFlight(resp.data)
                 setLoadingPage(false)
             })
-
-    }, [])
-
-    function handleTableResult() {
-        return (<table className="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Departures</th>
-                <th scope="col">Arrival</th>
-                <th scope="col">Price</th>
-                <th scope="col">Time Going</th>
-                <th scope="col">Time Return</th>
-                <th scope="col">Date to travel</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{lastFlight.id}</td>
-                <td>{Object.keys(lastFlight.destination)}</td>
-                <td>{Object.keys(lastFlight.origin)}</td>
-                <td>{lastFlight.price}</td>
-                <td>{lastFlight.timeGoing}</td>
-                <td>{lastFlight.timeReturn}</td>
-                <td>{lastFlight.travelAt}</td>
-            </tr>
-
-            </tbody>
-            <thead>
-            <tr>
-                <th colSpan={"3"}>Searched</th>
-                <th colSpan={"4"}>Airlines</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td colSpan={"3"}>{lastFlight.createdAt.replace("T", " ").replace("Z", "")}</td>
-                <td colSpan={"4"}>{lastFlight.airlines}</td>
-            </tr>
-
-            </tbody>
-        </table>)
     }
+
 
     function getNewFlight() {
         setIsLoading(true)
         HttpPythonApiGet()
-            .then(resp => {
-                console.log(resp.data)
+            .then(() => {
                 setIsLoading(false)
             })
             .catch(() => {
                 ErrorToast("Python Api error")
             })
+    }
+
+    function handleTableResult() {
+        return (
+            <table className="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Departures</th>
+                    <th scope="col">Arrival</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Time Going</th>
+                    <th scope="col">Time Return</th>
+                    <th scope="col">Date to travel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{lastFlight.id}</td>
+                    <td>{lastFlight.destination}</td>
+                    <td>{lastFlight.origin}</td>
+                    <td>{lastFlight.price}</td>
+                    <td>{lastFlight.timeGoing}</td>
+                    <td>{lastFlight.timeReturn}</td>
+                    <td>{lastFlight.travelAt}</td>
+                </tr>
+
+                </tbody>
+                <thead>
+                <tr>
+                    <th colSpan={"3"}>Searched</th>
+                    <th colSpan={"4"}>Airlines</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colSpan={"3"}>{lastFlight.createdAt.replace("T", " ").replace("Z", "")}</td>
+                    <td colSpan={"4"}>{lastFlight.airlines}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        )
     }
 
     return (
@@ -95,15 +103,18 @@ const FindNewFlight = () => {
                                                  onClick={() => getNewFlight()}>Submit</button>}
                             </div>
                         </C.Content>
-                        <C.ContentResp>
-                            {handleTableResult()}
-                        </C.ContentResp>
+                        {
+                            !isLoading ?
+                                <C.ContentResp>
+                                    {handleTableResult()}
+                                </C.ContentResp>
+                                :
+                                <></>
+                        }
                     </C.Container>
                     :
                     <Loading/>
             }
-
-
         </>
     )
 }
