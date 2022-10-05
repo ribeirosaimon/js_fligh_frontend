@@ -25,11 +25,11 @@ const FindFlignts = () => {
         }
 
         if (arrival !== "") {
-            body.filters.push({"key": "destination", "value": arrival})
+            body.filters.push({"key": "origin", "value": arrival})
         }
 
         if (departure !== "") {
-            body.filters.push({"key": "origin", "value": departure})
+            body.filters.push({"key": "destination", "value": departure})
         }
 
         setArrival("")
@@ -45,10 +45,6 @@ const FindFlignts = () => {
                 setHasResult(true)
                 setLoading(false)
             })
-            .catch(
-                ErrorToast("Api error")
-            )
-
     }
 
     function handleForm() {
@@ -73,6 +69,44 @@ const FindFlignts = () => {
         )
     }
 
+    function pagination() {
+        const previous = page === 1 ? 1 : page - 1
+        const next = page === 1 ? 3 : page + 1
+
+        return (
+            <>
+                {
+                    flight <= 20 ?
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination justify-content-center">
+                                <li className="page-item">
+                                    <button className="page-link" onClick={() => setPage(previous)}
+                                            tabIndex="-1">Previous
+                                    </button>
+                                </li>
+                                <li className={page >= 1 ? "page-item" : "page-item disabled"}>
+                                    <button className="page-link" onClick={() => setPage(previous)}>{previous}</button>
+                                </li>
+                                <li className={maxPage === 1 ? "page-item disabled" : "page-item"}>
+                                    <button className="page-link"
+                                            onClick={() => setPage(page === 1 ? 2 : page)}>{page === 1 ? 2 : page}</button>
+                                </li>
+                                <li className={maxPage >= 3 ? "page-item" : "page-item disabled"}>
+                                    <button className="page-link">{next}</button>
+                                </li>
+                                <li className={maxPage >= 3 ? "page-item" : "page-item disabled"}>
+                                    <button className="page-link" onClick={() => setPage(next)}>Next</button>
+                                </li>
+                            </ul>
+                        </nav>
+                        :
+                        <></>
+                }
+            </>
+
+        )
+    }
+
     function handleResult() {
         return (
             <>
@@ -91,7 +125,7 @@ const FindFlignts = () => {
                     </thead>
                     <tbody>
                     {
-                        fightList.map((flight, index) => (
+                        fightList === null ? <></> :fightList.map((flight, index) => (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{flight.id}</td>
@@ -106,7 +140,7 @@ const FindFlignts = () => {
                     }
                     </tbody>
                 </table>
-                <Pagination/>
+                {pagination()}
             </>
         )
     }
