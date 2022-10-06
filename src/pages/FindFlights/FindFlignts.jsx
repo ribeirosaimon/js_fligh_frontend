@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {HttpPostAxios} from "../../http/HttpBasicAxios";
 import Pagination from "../../components/Pagination";
 import {ErrorToast} from "../../components/Toasty/Toasty";
@@ -13,6 +13,10 @@ const FindFlignts = () => {
     const [departure, setDeparture] = useState("")
     const [arrival, setArrival] = useState("")
     const [hasResult, setHasResult] = useState(false)
+
+    useEffect(() => {
+        getFlights()
+    },[page])
 
     function getFlights() {
         setHasResult(false)
@@ -76,7 +80,7 @@ const FindFlignts = () => {
         return (
             <>
                 {
-                    flight <= 20 ?
+                    fightList.length <= 20 ?
                         <nav aria-label="Page navigation example">
                             <ul className="pagination justify-content-center">
                                 <li className="page-item">
